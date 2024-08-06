@@ -9,8 +9,9 @@ const connectDB = require('./config/connectDB');
 
 const usersRouter = require('./routes/users');
 const categoryRouter = require('./routes/category');
-const subCategory = require('./routes/subCategory');
-const brand = require('./routes/brand');
+const subCategoryRouter = require('./routes/subCategory');
+const brandRouter = require('./routes/brand');
+const productRouter = require('./routes/product');
 
 const app = express();
 
@@ -19,8 +20,9 @@ app.use(express.json());
 
 app.use('/users', usersRouter);
 app.use('/categories', categoryRouter);
-app.use('/sub-categories', subCategory);
-app.use('/brands', brand);
+app.use('/sub-categories', subCategoryRouter);
+app.use('/brands', brandRouter);
+app.use('/products', productRouter);
 
 app.all('*', (req, res, next) => {
 	return next(new AppError(`cannot find this route ${req.originalUrl}`, 404));

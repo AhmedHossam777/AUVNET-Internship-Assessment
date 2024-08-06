@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema(
 	{
-		title: {
+		name: {
 			type: String,
 			required: [true, 'Product name is required'],
 			unique: [true, 'Product must be unique, it already exists'],
@@ -12,30 +12,16 @@ const productSchema = new mongoose.Schema(
 		},
 		description: {
 			type: String,
-			required: [true, 'description is required'],
 			minlength: [10, 'too short description'],
-		},
-		quantity: {
-			type: Number,
-			required: [true, 'product quantity is required'],
 		},
 		price: {
 			type: Number,
 			required: [true, 'product must have a price'],
-			trim: true,
 		},
-		imageCover: {
-			type: String,
-			default: 'default.jpg',
-		},
-		category: {
+		user: {
 			type: mongoose.Schema.ObjectId,
-			ref: 'Category',
-			required: [true, 'Product must belong to category'],
-		},
-		subCategory: {
-			type: mongoose.Schema.ObjectId,
-			ref: 'SubCategory',
+			ref: 'User',
+			required: [true, 'Product must belong to a user'],
 		},
 		brand: {
 			type: mongoose.Schema.ObjectId,
