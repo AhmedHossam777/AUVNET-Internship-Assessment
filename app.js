@@ -12,6 +12,7 @@ const categoryRouter = require('./routes/category');
 const subCategoryRouter = require('./routes/subCategory');
 const brandRouter = require('./routes/brand');
 const productRouter = require('./routes/product');
+const wishlistRouter = require('./routes/wishlist');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/categories', categoryRouter);
 app.use('/sub-categories', subCategoryRouter);
 app.use('/brands', brandRouter);
 app.use('/products', productRouter);
+app.use('/wishlists', wishlistRouter);
 
 app.all('*', (req, res, next) => {
 	return next(new AppError(`cannot find this route ${req.originalUrl}`, 404));
@@ -41,9 +43,7 @@ const sever = app.listen(
 
 // Handling rejection outside express
 process.on('unhandledRejection', (err) => {
-	console.log(
-		`> Unhandled rejection Error: ${err.name} | ${err.message}`.underline.red,
-	);
+	console.log(`> Unhandled rejection Error: ${err.name} | ${err.message}`);
 	sever.close(() => {
 		console.log('Shutting down...');
 		process.exit(1);
