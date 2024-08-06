@@ -1,23 +1,7 @@
 const mongoose = require('mongoose');
-const User = require('../models/User');
 const asyncWrapper = require('express-async-handler');
-
-const createUser = asyncWrapper(async (req, res, next) => {
-	const { email } = req.body;
-	const dupUser = await User.findOne({ email });
-	if (dupUser) {
-		return res.status(400).json({
-			status: 'error',
-			message: 'User already exists',
-		});
-	}
-
-	const user = await User.create(req.body);
-	res.status(201).json({
-		status: 'success',
-		user,
-	});
-});
+const User = require('../models/User');
+const AppError = require('../utils/AppError');
 
 const getAllUsers = asyncWrapper(async (req, res, next) => {
 	const page = parseInt(req.query.page, 10) || 1;
@@ -39,20 +23,15 @@ const getAllUsers = asyncWrapper(async (req, res, next) => {
 
 const getUser = asyncWrapper(async (req, res, next) => {
 	const { id } = req.params;
+	console.log(id);
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(400).json({
-			status: 'error',
-			message: 'Invalid user ID',
-		});
+		return next(new AppError(400, 'Invalid user ID'));
 	}
 
 	const user = await User.findById(id);
 	if (!user) {
-		return res.status(404).json({
-			status: 'error',
-			message: 'User not found',
-		});
+		return next(new AppError(404, 'User not found'));
 	}
 
 	res.status(200).json({
@@ -65,18 +44,13 @@ const updateUser = asyncWrapper(async (req, res, next) => {
 	const { id } = req.params;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(400).json({
-			status: 'error',
-			message: 'Invalid user ID',
-		});
+		return next(new AppError(400, 'Invalid user ID'));
 	}
+	console.log(req.body);
 
 	const user = await User.findByIdAndUpdate(id, req.body, { new: true });
 	if (!user) {
-		return res.status(404).json({
-			status: 'error',
-			message: 'User not found',
-		});
+		return next(new AppError(404, 'User not found'));
 	}
 
 	res.status(200).json({
@@ -89,18 +63,12 @@ const deleteUser = asyncWrapper(async (req, res, next) => {
 	const { id } = req.params;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(400).json({
-			status: 'error',
-			message: 'Invalid user ID',
-		});
+		return next(new AppError(400, 'Invalid user ID'));
 	}
 
 	const user = await User.findByIdAndDelete(id);
 	if (!user) {
-		return res.status(404).json({
-			status: 'error',
-			message: 'User not found',
-		});
+		return next(new AppError(404, 'User not found'));
 	}
 
 	res.status(200).json({
@@ -109,4 +77,4 @@ const deleteUser = asyncWrapper(async (req, res, next) => {
 	});
 });
 
-module.exports = { createUser, getAllUsers, getUser, deleteUser, updateUser };
+module.exports = { getAllUsers, getUser, deleteUser, updateUser };
