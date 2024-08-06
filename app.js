@@ -9,6 +9,7 @@ const connectDB = require('./config/connectDB');
 
 const usersRouter = require('./routes/users');
 const categoryRouter = require('./routes/category');
+const subCategory = require('./routes/subCategory');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use('/users', usersRouter);
 app.use('/categories', categoryRouter);
+app.use('/sub-categories', subCategory);
 
 app.all('*', (req, res, next) => {
 	return next(new AppError(`cannot find this route ${req.originalUrl}`, 404));

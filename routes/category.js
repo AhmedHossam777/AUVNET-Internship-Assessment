@@ -1,5 +1,5 @@
 const express = require('express');
-const isAdmin = require('../middlewares/isAdmin');
+const { isAdmin } = require('../middlewares/isAdmin');
 const { protect } = require('../middlewares/auth');
 const {
 	createCategory,
@@ -11,14 +11,11 @@ const {
 
 const router = express.Router();
 
-router
-	.route('/')
-	.get(protect, getCategories)
-	.post(protect, isAdmin, createCategory);
+router.route('/').get(getCategories).post(protect, isAdmin, createCategory);
 
 router
 	.route('/:id')
-	.get(protect, getCategory)
+	.get(getCategory)
 	.patch(protect, isAdmin, updateCategory)
 	.delete(protect, isAdmin, deleteCategory);
 
