@@ -5,7 +5,7 @@ const User = require('../models/User');
 const getTokenFromHeader = require('../utils/getTokenFromHeader');
 const verifyToken = require('../utils/verifyToken');
 
-export const protect = async (req, res, next) => {
+const protect = async (req, res, next) => {
 	const token = getTokenFromHeader(req);
 	if (!token) {
 		return next(new AppError('Unauthorized: Missing token', 401));
@@ -28,3 +28,5 @@ export const protect = async (req, res, next) => {
 
 	next();
 };
+
+module.exports = { protect };

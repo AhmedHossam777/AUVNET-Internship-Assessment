@@ -71,7 +71,7 @@ const deleteUser = asyncWrapper(async (req, res, next) => {
 		return next(new AppError(404, 'User not found'));
 	}
 
-	res.status(200).json({
+	res.status(204).json({
 		status: 'success',
 		message: 'User deleted successfully',
 	});

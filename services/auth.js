@@ -16,7 +16,7 @@ const signup = asyncWrapper(async (req, res, next) => {
 		return next(new AppError(400, 'User already exists'));
 	}
 
-	const user = await User.create(req.body);
+	const user = await User.create({ email, password, username });
 
 	const token = await generateAccessToken(user._id);
 	res.status(201).json({

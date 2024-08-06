@@ -5,18 +5,18 @@ const express = require('express');
 const AppError = require('./utils/AppError');
 const logger = require('morgan');
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const connectDB = require('./config/connectDB');
+
+const usersRouter = require('./routes/users');
+const categoryRouter = require('./routes/category');
 
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/categories', categoryRouter);
 
 app.all('*', (req, res, next) => {
 	return next(new AppError(`cannot find this route ${req.originalUrl}`, 404));
