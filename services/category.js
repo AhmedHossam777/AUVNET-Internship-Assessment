@@ -12,9 +12,19 @@ const createCategory = asyncWrapper(async (req, res, next) => {
 });
 
 const getCategories = asyncWrapper(async (req, res, next) => {
-	const categories = await Category.find();
+	const page = parseInt(req.query.page, 10) || 1;
+	const limit = parseInt(req.query.limit, 10) || 10;
+	const skip = (page - 1) * limit;
+
+	const categories = await Category.find().limit(limit).skip(skip);
+	const totalCategories = await Category.countDocuments();
+
 	res.status(200).json({
 		status: 'success',
+		results: categories.length,
+		totalCategories,
+		currentPage: page,
+		totalPages: Math.ceil(totalCategories / limit),
 		categories,
 	});
 });
@@ -46,11 +56,13 @@ const updateCategory = asyncWrapper(async (req, res, next) => {
 });
 
 const deleteCategory = asyncWrapper(async (req, res, next) => {
-	const category = await Category.findByIdAndDelete(req.params.id);
+	const category = await Category.findById(req.params.id);
 
 	if (!category) {
 		return next(new AppError(404, 'Category not found'));
 	}
+
+	await Category.findByIdAndDelete(req.params.id);
 
 	res.status(204).json({
 		status: 'success',

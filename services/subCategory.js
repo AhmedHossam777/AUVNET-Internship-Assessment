@@ -11,9 +11,19 @@ const createSubCategory = asyncWrapper(async (req, res, next) => {
 });
 
 const getSubCategories = asyncWrapper(async (req, res, next) => {
-	const subCategories = await SubCategory.find();
+	const page = parseInt(req.query.page, 10) || 1;
+	const limit = parseInt(req.query.limit, 10) || 10;
+	const skip = (page - 1) * limit;
+
+	const subCategories = await SubCategory.find().limit(limit).skip(skip);
+	const totalSubCategories = await SubCategory.countDocuments();
+
 	res.status(200).json({
 		status: 'success',
+		results: subCategories.length,
+		totalSubCategories,
+		currentPage: page,
+		totalPages: Math.ceil(totalSubCategories / limit),
 		subCategories,
 	});
 });
@@ -45,10 +55,12 @@ const updateSubCategory = asyncWrapper(async (req, res, next) => {
 });
 
 const deleteSubCategory = asyncWrapper(async (req, res, next) => {
-	const subCategory = await SubCategory.findByIdAndDelete(req.params.id);
+	const subCategory = await SubCategory.findById(req.params.id);
 	if (!subCategory) {
 		return next(new AppError(404, 'SubCategory not found'));
 	}
+
+	await SubCategory.findByIdAndDelete(req.params.id);
 	res.status(204).json({
 		status: 'success',
 	});

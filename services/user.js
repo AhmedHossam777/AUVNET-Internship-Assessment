@@ -66,10 +66,11 @@ const deleteUser = asyncWrapper(async (req, res, next) => {
 		return next(new AppError(400, 'Invalid user ID'));
 	}
 
-	const user = await User.findByIdAndDelete(id);
+	const user = await User.findById(id);
 	if (!user) {
 		return next(new AppError(404, 'User not found'));
 	}
+	await User.findByIdAndDelete(id);
 
 	res.status(204).json({
 		status: 'success',
