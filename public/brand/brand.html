@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>Brand Management</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			max-width: 600px;
+			margin: auto;
+			padding: 20px;
+		}
+		.form-group {
+			margin-bottom: 15px;
+		}
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		.form-group input {
+			width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+		.form-group button {
+			padding: 10px 15px;
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+		.form-group button:disabled {
+			background-color: #cccccc;
+		}
+		.brands {
+			margin-top: 20px;
+		}
+		.brands li {
+			list-style: none;
+			margin-bottom: 10px;
+			padding: 10px;
+			border: 1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>Brand Management</h1>
+	
+	<div class="form-group" id="brandForm">
+		<label for="name">Brand Name</label>
+		<input id="name" required type="text">
+		<button id="createBrandBtn">Add Brand</button>
+	</div>
+	
+	<ul class="brands" id="brands"></ul>
+</div>
+<script src="brand.js"></script>
+</body>
+</html>

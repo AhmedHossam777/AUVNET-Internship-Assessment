@@ -6,6 +6,7 @@ const AppError = require('./utils/AppError');
 const logger = require('morgan');
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
 const connectDB = require('./config/connectDB');
+const cors = require('cors');
 
 const usersRouter = require('./routes/users');
 const categoryRouter = require('./routes/category');
@@ -15,6 +16,9 @@ const productRouter = require('./routes/product');
 const wishlistRouter = require('./routes/wishlist');
 
 const app = express();
+
+// Enable CORS for all routes
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());

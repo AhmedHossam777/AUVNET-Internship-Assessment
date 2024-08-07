@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>User Management</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			max-width: 600px;
+			margin: auto;
+			padding: 20px;
+		}
+		.form-group {
+			margin-bottom: 15px;
+		}
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		.form-group input {
+			width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+		.form-group button {
+			padding: 10px 15px;
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+		.form-group button:disabled {
+			background-color: #cccccc;
+		}
+		.user-list {
+			margin-top: 20px;
+		}
+		.user-list li {
+			list-style: none;
+			margin-bottom: 10px;
+			padding: 10px;
+			border: 1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>User Management</h1>
+	
+	<div class="form-group" id="signupForm">
+		<h2>Sign Up</h2>
+		<label for="signupEmail">Email</label>
+		<input id="signupEmail" required type="email">
+		<label for="signupPassword">Password</label>
+		<input id="signupPassword" required type="password">
+		<label for="signupUsername">Username</label>
+		<input id="signupUsername" required type="text">
+		<button id="signupBtn">Sign Up</button>
+	</div>
+	
+	<div class="form-group" id="loginForm">
+		<h2>Login</h2>
+		<label for="loginEmail">Email</label>
+		<input id="loginEmail" required type="email">
+		<label for="loginPassword">Password</label>
+		<input id="loginPassword" required type="password">
+		<button id="loginBtn">Login</button>
+		
+		<button id='loadUsersBtn' >get users</button >
+		<ul class="user-list" id="userList">
+		</ul>
+	</div>
+	
+</div>
+<script src='auth.js'></script>
+</body>
+</html>
